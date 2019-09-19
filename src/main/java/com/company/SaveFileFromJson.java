@@ -10,17 +10,16 @@ class SaveFileFromJson {
     private Gson gson;
     private FileWriter fileWriter;
 
-    SaveFileFromJson(String pathSaveFile, VkParserModel vkParserModel) {
+    SaveFileFromJson(String pathSaveFile) {
         try {
             fileWriter = new FileWriter(pathSaveFile, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.vkParserModel = vkParserModel;
         this.gson = new Gson();
     }
 
-    void saveInFile() {
+    void saveInFile(VkParserModel vkParserModel) {
         try {
             fileWriter.write(gson.toJson(vkParserModel));
             fileWriter.flush();

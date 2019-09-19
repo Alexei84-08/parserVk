@@ -17,6 +17,8 @@ class ParserVk {
     private Elements post;
     private Pattern searchPattern;
     private SaveFileFromJson saveFileFromJson;
+    private String patternRegexp;
+    private int flags = Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
 
     ParserVk(String uri, String search1, String search2, String pathSaveFile) {
         try {
@@ -25,12 +27,16 @@ class ParserVk {
             e.printStackTrace();
         }
         vkParserModel = new VkParserModel();
+        patternRegexp = "(\\b" + search1 + ".*\\b)(\\b" + search2 + ".*\\b)";
+        saveFileFromJson = new SaveFileFromJson(pathSaveFile);
+    }
+
+    void parsAndSave(){
         wallPost = getDocument();
         post = getPost();
-        String patternRegexp = "(\\b" + search1 + ".*\\b)(\\b" + search2 + ".*\\b)";
-        int flags = Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
         searchPattern = Pattern.compile(patternRegexp, flags);
-        saveFileFromJson = new SaveFileFromJson(pathSaveFile, vkParserModel);
+        parse();
+        saveFileFromJson.saveInFile(vkParserModel);
     }
 
     private Document getDocument() {
@@ -46,7 +52,7 @@ class ParserVk {
         return wallPost.getElementsByClass("post");
     }
 
-    void parsAndSave() {
+    private void parse() {
         for (Element element : post) {
             if (searchPattern.matcher(element.text()).find()) {
                 vkParserModel.setDate(element.select("span[class=rel_date]").first().text());
@@ -54,7 +60,7 @@ class ParserVk {
                 vkParserModel.setIdPost(element.select("a[class=author]").attr("data-post-id"));
                 vkParserModel.setPostText(element.select("div[class=wall_post_text]").text());
                 System.out.println(vkParserModel);
-                saveFileFromJson.saveInFile();
+//                saveFileFromJson.saveInFile();
             }
         }
     }
