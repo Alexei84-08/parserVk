@@ -9,13 +9,13 @@ public class RunParser implements Runnable {
     private String search1;
     private String search2;
 
-    RunParser(String[] pathFile, int idPage1, int idPage2, String search1, String search2) {
+    RunParser(String pathFile, int idPage1, int idPage2, String search1, String search2) {
         this.isActive = true;
         this.idPage1 = idPage1;
         this.idPage2 = idPage2;
         this.search1 = search1;
         this.search2 = search2;
-        this.parserVk = new ParserVk(pathFile[0] + "/ParseVk");
+        this.parserVk = new ParserVk(pathFile + "/ParseVk");
     }
 
     void disable() {
