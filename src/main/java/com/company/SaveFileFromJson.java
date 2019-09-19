@@ -6,21 +6,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 class SaveFileFromJson {
-    private VkParserModel vkParserModel;
     private Gson gson;
     private FileWriter fileWriter;
 
-    SaveFileFromJson(String pathSaveFile, VkParserModel vkParserModel) {
+    SaveFileFromJson(String pathSaveFile) {
         try {
             fileWriter = new FileWriter(pathSaveFile, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.vkParserModel = vkParserModel;
         this.gson = new Gson();
     }
 
-    void saveInFile() {
+    void saveInFile(VkParserModel vkParserModel) {
         try {
             fileWriter.write(gson.toJson(vkParserModel));
             fileWriter.flush();
@@ -29,7 +27,7 @@ class SaveFileFromJson {
         }
     }
 
-    void stopWrite(){
+    void stopWrite() {
         try {
             fileWriter.close();
         } catch (IOException e) {

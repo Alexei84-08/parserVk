@@ -8,17 +8,17 @@ public class NumberTextField extends TextField {
     public void replaceText(int start, int end, String text) {
         String oldValue = getText();
 
-        if (validate(text)){
+        if (validate(text)) {
             super.replaceText(start, end, text);
             String nawText = super.getText();
-            if (!validate(nawText)){
+            if (!validate(nawText)) {
                 super.setText(oldValue);
             }
         }
     }
 
-    private boolean validate(String text){
+    private boolean validate(String text) {
         String numberRegEx = "[0-9].*";
-        return ("".equals(text)||text.matches(numberRegEx));
+        return ("".equals(text) || text.matches(numberRegEx));
     }
 }
