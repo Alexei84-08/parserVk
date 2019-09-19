@@ -16,44 +16,63 @@ import java.io.IOException;
 
 public class Main extends Application {
     private RunParser runParser;
+    private String pathFile;
+    private Button openPathFile = new Button("Путь файла");
+    private Button start = new Button("Старт");
+    private Button stop = new Button("Стоп");
+    private TextField search1 = new TextField();
+    private TextField search2 = new TextField();
+    private TextField searchId1 = new NumberTextField();
+    private TextField searchId2 = new NumberTextField();
+    private Label lbl1 = new Label("введи слово №-1");
+    private Label lbl2 = new Label("введи слово №-2");
+    private Label lbl3 = new Label("введи число №-1");
+    private Label lbl4 = new Label("введи число №-2");
+    private Label lbl5 = new Label("путь файла: отсутствует!!!");
+    private Label lbl6 = new Label();
+    private DirectoryChooser directoryChooser = new DirectoryChooser();
+    private GridPane root = new GridPane();
+    private ColumnConstraints columnConstraints = new ColumnConstraints();
+    private ColumnConstraints columnConstraints1 = new ColumnConstraints();
+    private Scene scene = new Scene(root, 400, 300);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Application.launch();
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        Button openPathFile = new Button("Путь файла");
+    public void start(Stage stage) {
         openPathFile.setPrefSize(100, 10);
-
-        DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Open Document");
-
-        String[] pathFile = new String[1];
-
-        Button start = new Button("Старт");
         start.setPrefSize(100, 10);
-        Button stop = new Button("Стоп");
         stop.setPrefSize(100, 10);
-
-        TextField search1 = new TextField();
-        TextField search2 = new TextField();
-        TextField searchId1 = new NumberTextField();
-        TextField searchId2 = new NumberTextField();
-
-        Label lbl1 = new Label("введи слово №-1");
-        Label lbl2 = new Label("введи слово №-2");
-        Label lbl3 = new Label("введи число №-1");
-        Label lbl4 = new Label("введи число №-2");
-        Label lbl5 = new Label("путь файла: отсутствует!!!");
         lbl5.setTextFill(Color.web("#FF0000"));
         lbl5.setWrapText(true);
-        Label lbl6 = new Label();
+        root.setGridLinesVisible(false);
+        root.add(lbl1, 0, 1);
+        root.add(search1, 0, 2);
+        root.add(lbl2, 0, 3);
+        root.add(search2, 0, 4);
+        root.add(lbl3, 0, 5);
+        root.add(searchId1, 0, 6);
+        root.add(lbl4, 0, 7);
+        root.add(searchId2, 0, 8);
+        root.add(openPathFile, 2, 1);
+        root.add(start, 2, 2);
+        root.add(stop, 2, 3);
+        root.add(lbl5, 0, 9);
+        root.add(lbl6, 2, 5);
+        columnConstraints.setPrefWidth(270.0);
+        columnConstraints1.setPercentWidth(20);
+        root.getColumnConstraints().addAll(columnConstraints, columnConstraints1);
+        stage.setTitle("Поиск в Vk");
+        stage.setScene(scene);
+        stage.show();
 
         openPathFile.setOnAction(event -> {
-            pathFile[0] = directoryChooser.showDialog(stage).getPath();
+            pathFile = directoryChooser.showDialog(stage).getPath();
             lbl5.setTextFill(Color.web("#000000"));
-            lbl5.setText("путь файла: " + pathFile[0] + "/ParseVk.txt");
+            lbl5.setText("путь файла: " + pathFile + "/ParseVk.txt");
         });
 
         start.setOnAction(actionEvent -> {
@@ -83,33 +102,6 @@ public class Main extends Application {
                 lbl6.setText("STOP!");
             }
         });
-
-        GridPane root = new GridPane();
-        root.setGridLinesVisible(false);
-        root.add(lbl1, 0, 1);
-        root.add(search1, 0, 2);
-        root.add(lbl2, 0, 3);
-        root.add(search2, 0, 4);
-        root.add(lbl3, 0, 5);
-        root.add(searchId1, 0, 6);
-        root.add(lbl4, 0, 7);
-        root.add(searchId2, 0, 8);
-        root.add(openPathFile, 2, 1);
-        root.add(start, 2, 2);
-        root.add(stop, 2, 3);
-        root.add(lbl5, 0, 9);
-        root.add(lbl6, 2, 5);
-
-        ColumnConstraints columnConstraints = new ColumnConstraints();
-        columnConstraints.setPrefWidth(270.0);
-        ColumnConstraints columnConstraints1 = new ColumnConstraints();
-        columnConstraints1.setPercentWidth(20);
-        root.getColumnConstraints().addAll(columnConstraints, columnConstraints1);
-
-        Scene scene = new Scene(root, 400, 300);
-        stage.setTitle("Поиск в Vk");
-        stage.setScene(scene);
-        stage.show();
 
         stage.setOnCloseRequest(e -> {
             if (runParser != null) {
