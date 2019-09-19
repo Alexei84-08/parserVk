@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 class SaveFileFromJson {
-    private VkParserModel vkParserModel;
     private Gson gson;
     private FileWriter fileWriter;
 
@@ -28,7 +27,7 @@ class SaveFileFromJson {
         }
     }
 
-    void stopWrite(){
+    void stopWrite() {
         try {
             fileWriter.close();
         } catch (IOException e) {
