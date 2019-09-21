@@ -12,8 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class Main extends Application {
     private RunParser runParser;
     private String pathFile;
