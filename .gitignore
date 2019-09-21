@@ -35,3 +35,5 @@ gen
 
 # Project exclude paths
 /target/
+/.classpath
+/.project
